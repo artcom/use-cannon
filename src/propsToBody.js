@@ -67,6 +67,7 @@ const propsToBody = (uuid, props, type) => {
     material,
     shapes,
     onCollide,
+    onSleep,
     collisionResponse,
     ...extra
   } = props

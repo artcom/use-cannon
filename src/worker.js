@@ -136,17 +136,20 @@ self.onmessage = (e) => {
         state.world.addBody(body)
 
 
-        ///
-
+        // ///
+        console.log(props[i].onSleep)
         if (props[i].onSleep) {
-          body.addEventListener('sleep', () => {
+          body.addEventListener('sleep', ({ type }) => {
+            console.log("sleep event", type, body)
             self.postMessage({
               op: 'event',
+              type,
+              body: body.uuid
             })
           })
         }
 
-        ///
+        // ///
 
         if (props[i].onCollide)
           body.addEventListener('collide', ({ type, body, target, contact }) => {

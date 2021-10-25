@@ -236,13 +236,14 @@ function prepare(object: Object3D, props: BodyProps) {
 
 function setupCollision(
   events: ProviderContext['events'],
-  { onCollide, onCollideBegin, onCollideEnd }: Partial<BodyProps>,
+  { onCollide, onCollideBegin, onCollideEnd, onSleep }: Partial<BodyProps>,
   uuid: string,
 ) {
   events[uuid] = {
     collide: onCollide,
     collideBegin: onCollideBegin,
     collideEnd: onCollideEnd,
+    sleep: onSleep
   }
 }
 
@@ -299,13 +300,15 @@ function useBody<B extends BodyProps<unknown[]>>(
             return { ...props, args: argsFn(props.args) }
           })
 
+    
+
     // Register on mount, unregister on unmount
     currentWorker.postMessage({
       op: 'addBodies',
       type,
       uuid,
       props: props.map(({ onCollide, onCollideBegin, onCollideEnd, onSleep, ...serializableProps }) => {
-        return { onCollide: Boolean(onCollide), ...serializableProps }
+        return { onCollide: Boolean(onCollide), onSleep: Boolean(onSleep), ...serializableProps }
       }),
     })
     return () => {
