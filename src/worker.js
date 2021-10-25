@@ -135,12 +135,8 @@ self.onmessage = (e) => {
         const body = propsToBody(uuid[i], props[i], type)
         state.world.addBody(body)
 
-
-        // ///
-        console.log(props[i].onSleep)
         if (props[i].onSleep) {
           body.addEventListener('sleep', ({ type }) => {
-            console.log("sleep event", type, body)
             self.postMessage({
               op: 'event',
               type,
@@ -148,8 +144,6 @@ self.onmessage = (e) => {
             })
           })
         }
-
-        // ///
 
         if (props[i].onCollide)
           body.addEventListener('collide', ({ type, body, target, contact }) => {

@@ -300,8 +300,6 @@ function useBody<B extends BodyProps<unknown[]>>(
             return { ...props, args: argsFn(props.args) }
           })
 
-    
-
     // Register on mount, unregister on unmount
     currentWorker.postMessage({
       op: 'addBodies',
