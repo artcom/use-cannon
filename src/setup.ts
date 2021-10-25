@@ -38,8 +38,12 @@ export type CollideEndEvent = {
   body: Object3D
 }
 export type RayhitEvent = Omit<WorkerRayhitEvent['data'], 'body'> & { body: Object3D | null }
-
-type CannonEvent = CollideBeginEvent | CollideEndEvent | CollideEvent | RayhitEvent
+export type SleepEvent = {
+  op: 'event'
+  type: 'sleep'
+  body: Object3D
+}
+type CannonEvent = CollideBeginEvent | CollideEndEvent | CollideEvent | RayhitEvent | SleepEvent
 type CallbackByType<T extends { type: string }> = {
   [K in T['type']]?: T extends { type: K } ? (e: T) => void : never
 }

@@ -126,11 +126,19 @@ export type WorkerCollideEndEvent = {
     bodyB: string
   }
 }
+export type WorkerSleepEvent = {
+  data: {
+    op: 'event'
+    type: 'sleep'
+    body: string
+  }
+}
 type WorkerEventMessage =
   | WorkerCollideEvent
   | WorkerRayhitEvent
   | WorkerCollideBeginEvent
   | WorkerCollideEndEvent
+  | WorkerSleepEvent
 type IncomingWorkerMessage = WorkerFrameMessage | WorkerEventMessage
 
 const v = new Vector3()
@@ -303,6 +311,14 @@ export default function Provider({
               callback({
                 ...e.data,
                 body: e.data.body ? refs[e.data.body] : null,
+              })
+              break
+            case 'sleep':
+              callback =  events[e.data.body].sleep || noop
+              callback({
+                op: 'event',
+                type: 'sleep',
+                body: refs[e.data.body],
               })
               break
           }

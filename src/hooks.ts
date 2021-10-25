@@ -12,6 +12,7 @@ import type {
   RayhitEvent,
   RayMode,
   SetOpName,
+  SleepEvent,
   SubscriptionName,
   SubscriptionTarget,
   VectorName,
@@ -49,6 +50,7 @@ export type BodyProps<T extends any[] = unknown[]> = Partial<AtomicProps> &
     onCollide?: (e: CollideEvent) => void
     onCollideBegin?: (e: CollideBeginEvent) => void
     onCollideEnd?: (e: CollideEndEvent) => void
+    onSleep?: (e: SleepEvent) => void
     quaternion?: Quad
     rotation?: Triplet
     type?: 'Dynamic' | 'Static' | 'Kinematic'
@@ -302,7 +304,7 @@ function useBody<B extends BodyProps<unknown[]>>(
       op: 'addBodies',
       type,
       uuid,
-      props: props.map(({ onCollide, onCollideBegin, onCollideEnd, ...serializableProps }) => {
+      props: props.map(({ onCollide, onCollideBegin, onCollideEnd, onSleep, ...serializableProps }) => {
         return { onCollide: Boolean(onCollide), ...serializableProps }
       }),
     })

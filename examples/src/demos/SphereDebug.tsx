@@ -7,6 +7,7 @@ function ScalableBall() {
     args: [1],
     mass: 1,
     position: [0, 5, 0],
+    onSleep: () => console.log('test'),
   }))
   const [sleeping, setSleeping] = useState(false)
 
